@@ -64,10 +64,19 @@ def main():
     
     if uploaded_file is not None:
         try:
+
             # Procesar archivo
             processor = DataProcessor()
             df = processor.load_file(uploaded_file)
             
+            metrics = processor.basic_metrics(df)
+            st.subheader("📈 Métricas Rápidas del Dataset")
+
+            if "correlation" in metrics:
+                st.write(f"**Correlación entre variables numéricas:**")
+                st.dataframe(metrics['correlation'])
+            
+                        
             st.success(f"✅ Archivo cargado: {uploaded_file.name}")
             st.info(f"🖼️ Dimensiones: {df.shape[0]} filas × {df.shape[1]} columnas")
             
@@ -135,7 +144,16 @@ def analyze_with_ai(df, processor, analyzer):
         
         # 4. Ejecutar código
         executor = CodeExecutor()
+
         results = executor.execute_code(code, df)
+
+        if not results["success"]:
+
+            st.warning("⚠️ Corrigiendo código automáticamente...")
+
+            fixed_code = analyzer.fix_code(code, results["error"])
+
+            results = executor.execute_code(fixed_code, df)
         
         if results['success']:
             st.success("✅ Análisis completado exitosamente")

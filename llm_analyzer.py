@@ -1,5 +1,8 @@
+from prompt_toolkit import prompt
 import requests
 import json
+
+from streamlit import error
 
 class LLMAnalyzer:
     """Clase para interactuar con Ollama y generar análisis"""
@@ -197,3 +200,25 @@ INSIGHTS:"""
 Usa máximo 2 frases. Escribe en español."""
 
         return self.query_llm(prompt, temperature=0.4)
+    
+    def fix_code(self, code, error_message):
+        prompt = f"""
+El siguiente código Python generó un error.
+
+ERROR:
+{error_message}
+
+CODIGO:
+{code}
+
+Corrige el código.
+
+Reglas:
+- No uses imports
+- Usa df como dataframe
+- Usa matplotlib para gráficos
+
+Devuelve SOLO código Python.
+"""
+
+        return self.query_llm(prompt, temperature=0.1)

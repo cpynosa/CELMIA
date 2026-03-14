@@ -143,6 +143,24 @@ class DataProcessor:
         
         return suggestions
     
+    def basic_metrics(self, df):
+
+        metrics = {}
+
+        numeric_cols = df.select_dtypes(include=['number']).columns
+
+        if len(numeric_cols) > 0:
+
+            metrics["correlation"] = df[numeric_cols].corr()
+
+            metrics["skewness"] = df[numeric_cols].skew()
+
+            metrics["kurtosis"] = df[numeric_cols].kurtosis()
+
+        metrics["missing"] = df.isnull().sum()
+
+        return metrics
+    
     def clean_data(self, df, options=None):
         """Limpia el dataset según opciones especificadas"""
         
