@@ -40,7 +40,7 @@ def main():
         
         **Ventajas:**
         - 🔒 100% privado y offline
-        - 🚀 Análisis en segundos
+        - 🚀 Análisis proporcionados por IA
         - 📈 Visualizaciones automáticas
         - 💡 Insights accionables
                     
@@ -68,6 +68,8 @@ def main():
             # Procesar archivo
             processor = DataProcessor()
             df = processor.load_file(uploaded_file)
+
+            auto_dashboard(df)
             
             metrics = processor.basic_metrics(df)
             st.subheader("📈 Métricas Rápidas del Dataset")
@@ -120,6 +122,41 @@ def main():
                     "dataset_ejemplo.csv",
                     "text/csv"
                 )
+
+def auto_dashboard(df):
+
+    st.subheader(f"📊 Dashboard automático sobre {df.select_dtypes(include=['number']).columns[0]}")
+
+    numeric_cols = df.select_dtypes(include=['number']).columns
+
+    if len(numeric_cols) > 0:
+
+        col = numeric_cols[0]
+
+        st.metric(
+            label=f"Promedio de {col}",
+            value=round(df[col].mean(),2)
+        )
+
+        st.metric(
+            label=f"Máximo de {col}",
+            value=df[col].max()
+        )
+
+        st.metric(
+            label=f"Mínimo de {col}",
+            value=df[col].min()
+        )
+
+    if len(numeric_cols) > 0:
+
+        import matplotlib.pyplot as plt
+
+        plt.figure()
+
+        df[numeric_cols[0]].hist()
+
+        st.pyplot(plt)
 
 def analyze_with_ai(df, processor, analyzer):
     """Ejecuta el análisis completo con IA"""
@@ -261,7 +298,7 @@ INSIGHTS CLAVE
 {insights}
 
 ---
-Generado con IA local - 100% privado y offline
+Generado con CELMIA - 100% privado y offline
     """
     return report
 

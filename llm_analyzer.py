@@ -83,15 +83,18 @@ INFORMACIÓN DEL DATASET:
 {columns_text}
 
 REGLAS CRÍTICAS DE SINTAXIS:
-1. Usa SOLO estas librerías: pandas (pd), numpy (np), matplotlib.pyplot (plt)
+1. Usa SOLO estas librerías: pandas (pd), numpy (np), matplotlib.pyplot (plt), seaborn (sns)
 2. El DataFrame YA está cargado en la variable 'df'
 3. Ya existe una lista vacía 'plots = []'
 4. NO escribas import statements
 5. NO uses comillas triples (''') en el código
 6. Verifica que todas las llaves, paréntesis y corchetes estén balanceados
 7. Escribe código que funcione sin errores de sintaxis
-8. Realiza visualizaciones claras, evitando gráficos muy complejos o innecesarios
+8. Realiza visualizaciones claras, evitando gráficos muy complejos o innecesarios (evita gráficos que requieran de mucha experiencia para comprender ej. boxplots)
 9. Realiza gráficos con grandes insights, no gráficos decorativos o muy simples
+
+REGLA URGENTE:
+No hagas visualización sobre la primer variable numérica que encuentres. Analiza el dataset y elige otra variable más relevante para visualizar.
 
 REGLAS DE MATPLOTLIB:
 - Crear figura: plt.figure(figsize=(10, 6))
