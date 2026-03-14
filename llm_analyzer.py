@@ -1,6 +1,4 @@
-from prompt_toolkit import prompt
 import requests
-import json
 
 from streamlit import error
 
